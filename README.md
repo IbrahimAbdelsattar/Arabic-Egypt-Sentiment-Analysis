@@ -1,6 +1,6 @@
 # 🇪🇬 Arabic Sentiment Analysis – Egyptian Dialect (ML + Deep Learning)
 
-![Arabic Sentiment Analysis](https://raw.githubusercontent.com/username/repo/main/images/تحليل%20المشاعر%20باللهجة%20المصرية.png)
+![Arabic Sentiment Analysis]([https://raw.githubusercontent.com/username/repo/main/images/تحليل%20المشاعر%20باللهجة%20المصرية.png](https://sdmntprpolandcentral.oaiusercontent.com/files/8babd164116a096_00000000-dde8-620a-96ef-25fb0bbab8d8/drvs/thumbnail/raw?se=2025-06-22T22%3A59%3A57Z&sp=r&sv=2024-08-04&sr=b&scid=ede47568-be05-5636-a5df-e642a9b035c4&skoid=76024c37-11e2-4c92-aa07-7e519fbe2d0f&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-06-22T06%3A08%3A24Z&ske=2025-06-23T06%3A08%3A24Z&sks=b&skv=2024-08-04&sig=DMS3caGa4nrrbqYZCh8YX9gLEcYECx/LFsYLKA0KQfo%3D))
 
 This project presents a comprehensive Arabic sentiment analysis pipeline for classifying **user-generated reviews written in Egyptian dialect** into three sentiment categories: **positive**, **neutral**, and **negative**. It combines both **traditional machine learning techniques** and **deep learning (DNN)** to explore accuracy, performance, and production readiness.
 
