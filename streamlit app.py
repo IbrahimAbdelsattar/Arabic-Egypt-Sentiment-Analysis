@@ -1,37 +1,56 @@
 import streamlit as st
-import tensorflow as tf
 import pickle
-import numpy as np
-from tensorflow.keras.preprocessing.sequence import pad_sequences
 
-# تحميل الـ tokenizer
-with open("tokenizer.pickle", "rb") as handle:
-    tokenizer = pickle.load(handle)
+# -----------------------------
+# تحميل الموديل والـ TF-IDF Vectorizer
+# -----------------------------
+with open("logistic_model.pkl", "rb") as f:
+    model = pickle.load(f)
 
-# تحميل الموديل
-model = tf.keras.models.load_model("sentiment_model.h5")
+with open("tfidf_vectorizer (1).pkl", "rb") as f:
+    vectorizer = pickle.load(f)
 
-# إعدادات الإدخال
-st.title("📊 Arabic Sentiment Analysis")
-st.markdown("أدخل نص عربي لتحليل المشاعر (إيجابي / سلبي / محايد).")
+# -----------------------------
+# إعداد واجهة Streamlit
+# -----------------------------
+st.set_page_config(
+    page_title="تحليل المشاعر - Sentiment Analysis",
+    page_icon="📊",
+    layout="centered"
+)
 
-user_input = st.text_area("أكتب النص هنا:")
+st.title("📊 تطبيق تحليل المشاعر بالعربي")
+st.markdown(
+    """
+    👋 أهلاً بيك!  
+    التطبيق ده بيحلل النصوص العربية ويقول إذا كان **إيجابي 😊** أو **سلبي 😡** أو **محايد 😐**.  
 
-if st.button("تحليل"):
+    جرب تكتب جملة زي:  
+    - "التجربة دي حلوة جداً"  
+    - "المنتج وحش ومش عجبني"  
+    - "الموضوع عادي خالص"  
+    """
+)
+
+# -----------------------------
+# إدخال المستخدم
+# -----------------------------
+user_input = st.text_area("📝 اكتب الجملة بتاعتك هنا:", "الفيلم كان رائع جداً وممتع 👌")
+
+if st.button("✨ حلّل الجملة"):
     if user_input.strip() != "":
-        # تحويل النص إلى sequences
-        seq = tokenizer.texts_to_sequences([user_input])
-        padded = pad_sequences(seq, maxlen=100)  # لازم تخلي maxlen نفس اللي كنت مستخدمه في التدريب
+        # تحويل النصوص لتمثيل عددي باستخدام TF-IDF
+        new_vec = vectorizer.transform([user_input])
 
         # التنبؤ
-        prediction = model.predict(padded)
-        sentiment_class = np.argmax(prediction)
+        prediction = model.predict(new_vec)[0]
 
-        if sentiment_class == 0:
-            st.success("😡 سلبي")
-        elif sentiment_class == 1:
-            st.success("😐 محايد")
+        # عرض النتيجة
+        if prediction == 0:
+            st.error("التحليل: 😡 سلبي")
+        elif prediction == 1:
+            st.warning("التحليل: 😐 محايد")
         else:
-            st.success("😊 إيجابي")
+            st.success("التحليل: 😊 إيجابي")
     else:
-        st.warning("من فضلك أدخل نص.")
+        st.warning("⚠️ من فضلك اكتب جملة عشان نقدر نحللها.")
